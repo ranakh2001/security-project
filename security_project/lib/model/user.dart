@@ -35,10 +35,19 @@ class User {
       urlAvatar: json['urlAvatar'],
       lastMessageTime: Utils.toDateTime(json['lastMessageTime']));
 
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      idUser: map['idUser'],
+      name: map['name'],
+      urlAvatar: map['urlAvatar'],
+      lastMessageTime: map['lastMessageTime'],
+    );
+  }
+
   Map<String, dynamic> toJson() => {
-    'idUser':idUser,
-    'name':name,
-    'urlAvatar':urlAvatar,
-    'lastMessaging':Utils.fromDateTimeToJson(lastMessageTime!),
-  };
+        'idUser': idUser,
+        'name': name,
+        'urlAvatar': urlAvatar,
+        'lastMessaging': Utils.fromDateTimeToJson(lastMessageTime!),
+      };
 }

@@ -8,21 +8,39 @@ import '../data.dart';
 import '../model/message.dart';
 
 class FirebaseApi {
-  static Stream<List<User>> getUsers() {
-    return FirebaseFirestore.instance
+  static Stream<List<User>> getUsers() async* {
+    yield* FirebaseFirestore.instance
         .collection('users')
-        .orderBy(UserField.lastMessageTime, descending: true)
         .snapshots()
-        .transform(Utils.transformer(User.fromJson) as StreamTransformer<
-            QuerySnapshot<Map<String, dynamic>>, List<User>>);
+        .map((data) {
+      return data.docs.map((doc) {
+        return User.fromMap(doc.data());
+      }).toList();
+    });
   }
+
+  //   Stream<List<CardModel>> getCards() async* {
+  //   yield* db.collection(Constance.singleton.cards).snapshots().map((snapshot) {
+  //     return snapshot.docs.map((doc) {
+  //       return CardModel.fromMap(doc.data());
+  //     }).toList();
+  //   });
+  // }
+  // static Stream<List<User>> getUsers() {
+  //   return FirebaseFirestore.instance
+  //       .collection('users')
+  //       .orderBy(UserField.lastMessageTime, descending: true)
+  //       .snapshots()
+  //       .transform(Utils.transformer(User.fromJson) as StreamTransformer<
+  //           QuerySnapshot<Map<String, dynamic>>, List<User>>);
+  // }
 
   static Future uploadMessge(String idUser, String message) async {
     final refMessages =
         FirebaseFirestore.instance.collection('chats/$idUser/messages');
     final newMessage = Message(
         idUser: myId,
-        urlAvatar:myUrl,
+        urlAvatar: myUrl,
         userName: myUsername,
         message: message,
         createdAt: DateTime.now());
