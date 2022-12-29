@@ -1,5 +1,5 @@
 class UserField {
-  static const String lastMessageTime = 'lastMessageTime';
+  static const String lastMessageTime = 'lastMessaging';
 }
 
 class User {

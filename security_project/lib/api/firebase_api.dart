@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:security_project/model/user.dart';
-import 'package:security_project/utils.dart';
 
 import '../data.dart';
 import '../model/message.dart';
@@ -11,6 +10,7 @@ class FirebaseApi {
   static Stream<List<User>> getUsers() async* {
     yield* FirebaseFirestore.instance
         .collection('users')
+        .orderBy(UserField.lastMessageTime, descending: true)
         .snapshots()
         .map((data) {
       return data.docs.map((doc) {
@@ -26,6 +26,7 @@ class FirebaseApi {
   //     }).toList();
   //   });
   // }
+
   // static Stream<List<User>> getUsers() {
   //   return FirebaseFirestore.instance
   //       .collection('users')
@@ -43,21 +44,38 @@ class FirebaseApi {
         urlAvatar: myUrl,
         userName: myUsername,
         message: message,
-        createdAt: DateTime.now());
+        createdAt: DateTime.now().millisecondsSinceEpoch);
     await refMessages.add(newMessage.toJson());
     final refUsers = FirebaseFirestore.instance.collection('users');
-    await refUsers
-        .doc(idUser)
-        .update({UserField.lastMessageTime: DateTime.now()});
+    await refUsers.doc(idUser).update(
+        {UserField.lastMessageTime: DateTime.now().millisecondsSinceEpoch});
   }
 
-  static Stream<List<Message>> getMessages(String idUser) =>
-      FirebaseFirestore.instance
-          .collection('chats/$idUser/messages')
-          .orderBy(MessageField.createdAt, descending: true)
-          .snapshots()
-          .transform(Utils.transformer(Message.fromJson) as StreamTransformer<
-              QuerySnapshot<Map<String, dynamic>>, List<Message>>);
+  //   static Stream<List<User>> getUsers() async* {
+  //   yield* FirebaseFirestore.instance
+  //       .collection('users')
+  //       .orderBy(UserField.lastMessageTime, descending: true)
+  //       .snapshots()
+  //     .map((data) {
+  //   return data.docs.map((doc) {
+  //     return User.fromMap(doc.data());
+  //   }).toList();
+  // });
+  // }
+
+  static Stream<List<Message>> getMessages(String idUser) async* {
+    yield* FirebaseFirestore.instance
+        .collection('chats/$idUser/messages')
+        // .orderBy(MessageField.createdAt, descending: true)
+        .snapshots()
+        .map((data) {
+      return data.docs.map((doc) {
+        return Message.fromMap(doc.data());
+      }).toList();
+    });
+  }
+
+  // static Stream<List<Message>> getMessages(String idUser) =>
 
   static Future addRandomUsers(List<User> users) async {
     final refUsers = FirebaseFirestore.instance.collection('users');
