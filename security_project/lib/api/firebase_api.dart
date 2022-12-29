@@ -66,7 +66,7 @@ class FirebaseApi {
   static Stream<List<Message>> getMessages(String idUser) async* {
     yield* FirebaseFirestore.instance
         .collection('chats/$idUser/messages')
-        // .orderBy(MessageField.createdAt, descending: true)
+        .orderBy(MessageField.createdAt, descending: true)
         .snapshots()
         .map((data) {
       return data.docs.map((doc) {
