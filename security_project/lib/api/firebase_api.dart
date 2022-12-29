@@ -19,22 +19,6 @@ class FirebaseApi {
     });
   }
 
-  //   Stream<List<CardModel>> getCards() async* {
-  //   yield* db.collection(Constance.singleton.cards).snapshots().map((snapshot) {
-  //     return snapshot.docs.map((doc) {
-  //       return CardModel.fromMap(doc.data());
-  //     }).toList();
-  //   });
-  // }
-  // static Stream<List<User>> getUsers() {
-  //   return FirebaseFirestore.instance
-  //       .collection('users')
-  //       .orderBy(UserField.lastMessageTime, descending: true)
-  //       .snapshots()
-  //       .transform(Utils.transformer(User.fromJson) as StreamTransformer<
-  //           QuerySnapshot<Map<String, dynamic>>, List<User>>);
-  // }
-
   static Future uploadMessge(String idUser, String message) async {
     final refMessages =
         FirebaseFirestore.instance.collection('chats/$idUser/messages');

@@ -53,7 +53,7 @@ class _NewMessageWidgetState extends State<NewMessageWidget> {
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration:
-                const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                const BoxDecoration(shape: BoxShape.circle, color: Colors.deepPurple),
             child: const Icon(
               Icons.send,
               color: Colors.white,
