@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:security_project/model/user.dart';
 import 'package:security_project/page/chat_page.dart';
@@ -29,7 +28,7 @@ class ChatHeaderWidget extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          Container(
+          SizedBox(
             height: 60,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,

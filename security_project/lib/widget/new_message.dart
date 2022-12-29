@@ -1,6 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:security_project/api/firebaseApi.dart';
+import 'package:security_project/api/firebase_api.dart';
 
 class NewMessageWidget extends StatefulWidget {
   final String idUser;
@@ -37,7 +36,7 @@ class _NewMessageWidgetState extends State<NewMessageWidget> {
                 fillColor: Colors.grey[100],
                 labelText: 'Type your message',
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 0),
+                  borderSide: const BorderSide(width: 0),
                   gapPadding: 10,
                   borderRadius: BorderRadius.circular(25),
                 )),
