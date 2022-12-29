@@ -1,14 +1,12 @@
-import '../utils.dart';
-
 class UserField {
-  static const String lastMessageTime = 'lastMessageTime';
+  static const String lastMessageTime = 'lastMessaging';
 }
 
 class User {
   final String? idUser;
   final String name;
   final String urlAvatar;
-  final DateTime? lastMessageTime;
+  final int? lastMessageTime;
 
   const User({
     this.idUser,
@@ -33,7 +31,7 @@ class User {
       idUser: json['idUser'],
       name: json['name'],
       urlAvatar: json['urlAvatar'],
-      lastMessageTime: Utils.toDateTime(json['lastMessageTime']));
+      lastMessageTime: json['lastMessageTime']);
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
@@ -48,6 +46,6 @@ class User {
         'idUser': idUser,
         'name': name,
         'urlAvatar': urlAvatar,
-        'lastMessaging': Utils.fromDateTimeToJson(lastMessageTime!),
+        'lastMessaging': lastMessageTime,
       };
 }

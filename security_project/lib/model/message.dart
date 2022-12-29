@@ -1,5 +1,3 @@
-import 'package:security_project/utils.dart';
-
 class MessageField {
   static const String createdAt = 'createdAt';
 }
@@ -9,7 +7,7 @@ class Message {
   final String? userName;
   final String urlAvatar;
   final String message;
-  final DateTime? createdAt;
+  final int? createdAt;
 
   const Message({
     required this.idUser,
@@ -24,13 +22,23 @@ class Message {
       userName: json['username'],
       urlAvatar: json['urlAvatar'],
       message: json['Message'],
-      createdAt: Utils.toDateTime(json['createdAt']));
+      createdAt: json['createdAt']);
 
   Map<String, dynamic> toJson() => {
         'idUser': idUser,
         'userName': userName,
         'urlAvatar': urlAvatar,
         'message': message,
-        'createdAt': Utils.fromDateTimeToJson(createdAt!)
+        'createdAt': createdAt
       };
+
+  factory Message.fromMap(Map<String, dynamic> map) {
+    return Message(
+      idUser: map['idUser'],
+      userName: map['userName'],
+      urlAvatar: map['urlAvatar'],
+      message: map['message'],
+      createdAt: map['createdAt'],
+    );
+  }
 }
